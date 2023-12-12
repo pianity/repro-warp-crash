@@ -1,6 +1,5 @@
-import { SmartWeaveGlobal, LoggerFactory, WarpFactory, Transaction } from "warp-contracts";
+import { SmartWeaveGlobal, LoggerFactory, WarpFactory } from "warp-contracts";
 import { DeployPlugin, ArweaveSigner } from "warp-contracts-plugin-deploy";
-import { PgSortKeyCache, PgSortKeyCacheOptions } from "warp-contracts-postgres";
 
 LoggerFactory.INST.logLevel("error");
 
@@ -81,20 +80,9 @@ const proxyContract = (() => {
 })();
 
 (async () => {
-    const cacheOpts = (tableName: string): PgSortKeyCacheOptions => ({
-        tableName,
-        host: "localhost",
-        port: 5432,
-        database: "warp",
-        user: "warp",
-        schemaName: "warpschema",
-        minEntriesPerKey: 1,
-        maxEntriesPerKey: 10000,
-    });
-
-    const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" })
-        .use(new DeployPlugin())
-        .useKVStorageFactory((contractTxId) => new PgSortKeyCache(cacheOpts(contractTxId)));
+    const warp = WarpFactory.forTestnet({ inMemory: true, dbLocation: "./cache/warp" }).use(
+        new DeployPlugin(),
+    );
 
     const { arweave } = warp;
 

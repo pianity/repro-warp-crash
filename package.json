@@ -12,7 +12,6 @@
         "prettier": "^3.0.3",
         "typescript": "^5.0.0",
         "warp-contracts": "1.4.26",
-        "warp-contracts-plugin-deploy": "1.0.12",
-        "warp-contracts-postgres": "1.1.0"
+        "warp-contracts-plugin-deploy": "1.0.12"
     }
 }
